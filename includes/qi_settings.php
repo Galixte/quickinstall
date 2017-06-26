@@ -17,7 +17,6 @@ if (!defined('IN_QUICKINSTALL'))
 
 $attempted = $saved = false;
 $config_text = '';
-$error = '';
 if ($mode == 'update_settings')
 {
 	// Time to save some settings. request_var('qi_profile', '')
@@ -33,6 +32,7 @@ if ($mode == 'update_settings')
 
 	$attempted = true;
 	$valid = false;
+	$error = '';
 	if ($settings->validate())
 	{
 		$valid = true;
@@ -87,10 +87,13 @@ if ($settings->install)
 	// Don't show errors when installing QI
 	$error = '';
 }
-else if (!is_writable($quickinstall_path . 'settings') || !is_dir($quickinstall_path . 'settings'))
+else
 {
-	$error .= $user->lang['SETTINGS_NOT_WRITABLE'] . '<br />';
-	$s_settings_writable = false;
+	if (!is_writable($quickinstall_path . 'settings') || !is_dir($quickinstall_path . 'settings'))
+	{
+		$error .= $user->lang['SETTINGS_NOT_WRITABLE'] . '<br />';
+		$s_settings_writable = false;
+	}
 }
 
 if ($alt_env_missing && !$attempted && !$saved)
@@ -165,7 +168,7 @@ $template->assign_vars(array(
 	'CONFIG_REDIRECT'		=> $settings->get_config('redirect', 0),
 	'CONFIG_SERVER_NAME'	=> $settings->get_config('server_name'),
 	'CONFIG_SERVER_PORT'	=> $settings->get_config('server_port'),
-	'CONFIG_SHOW_CONFIRM'	=> $settings->get_config('show_confirm', 1),
+	'CONFIG_SHOW_CONFIRM'	=> $settings->get_config('show_confirm', 0),
 	'CONFIG_SITE_DESC'		=> $settings->get_config('site_desc'),
 	'CONFIG_SITE_NAME'		=> $settings->get_config('site_name'),
 	'CONFIG_SMTP_AUTH'		=> $settings->get_config('smtp_auth'),

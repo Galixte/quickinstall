@@ -95,7 +95,7 @@ class qi_main
 		));
 
 		// Output page
-		qi::page_header($user->lang['QI_MANAGE']);
+		qi::page_header($user->lang['QI_MANAGE'], $user->lang['QI_MANAGE_ABOUT']);
 
 		$template->set_filenames(array(
 			'body' => 'main_body.html')

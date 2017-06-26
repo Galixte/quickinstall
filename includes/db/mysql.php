@@ -21,8 +21,6 @@ if (!defined('IN_QUICKINSTALL'))
 */
 class dbal_mysql_qi extends dbal_mysql
 {
-	public $mysql_version;
-
 	/**
 	* Connect to server
 	*/
@@ -65,5 +63,13 @@ class dbal_mysql_qi extends dbal_mysql
 	function sql_select_db($dbname)
 	{
 		return @mysql_select_db($dbname, $this->db_connect_id);
+	}
+
+	/**
+	 * Updates value of a sequence.
+	 * Does nothing in this dbal.
+	 */
+	public function update_sequence($sequence_name, $value)
+	{
 	}
 }

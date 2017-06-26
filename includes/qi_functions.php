@@ -47,10 +47,6 @@ function gen_dbms_options($default = 'mysqli')
 			'LABEL'		=> 'SQLite',
 			'MODULE'	=> 'sqlite',
 		),
-		'sqlite3'		=> array(
-			'LABEL'			=> 'SQLite3',
-			'MODULE'		=> 'sqlite3',
-		),
 	);
 
 	$options = '';
@@ -222,7 +218,7 @@ function qi_timezone_select($user, $default = '', $truncate = false)
 	return $tz_select;
 }
 
-function gen_error_msg($msg_text, $msg_title = 'General Error', $msg_explain = '', $update_profiles = false)
+function gen_error_msg($msg_text, $msg_title = 'General error', $msg_explain = '', $update_profiles = false)
 {
 	global $quickinstall_path, $user;
 
@@ -230,7 +226,7 @@ function gen_error_msg($msg_text, $msg_title = 'General Error', $msg_explain = '
 
 	if ($update_profiles)
 	{
-		$settings_form = '<div style="margin: 10px 0 0 0; text-align: center;"><p><form action="" method="post"><input class="btn btn-primary" type="submit" name="update_all" value="' .
+		$settings_form = '<div style="margin: 10px 0 0 0; text-align: center;"><p><form action="" method="post"><input class="button2" type="submit" name="update_all" value="' .
 		$user->lang['UPDATE_PROFILES'] . '" /></form></p></div>';
 	}
 	else
@@ -242,24 +238,57 @@ function gen_error_msg($msg_text, $msg_title = 'General Error', $msg_explain = '
 	{
 		$l_return_index = sprintf($user->lang['GO_QI_MAIN'], '<a href="' . qi::url('main') . '">', '</a> &bull; ');
 		$l_return_index .= sprintf($user->lang['GO_QI_SETTINGS'], '<a href="' . qi::url('settings') . '">', '</a>');
-		$l_quickinstall = $user->lang['QUICKINSTALL'];
 	}
 	else
 	{
 		$l_return_index = '<a href="' . qi::url('main') . '">Go to QuickInstall main page</a> &bull; ';
-		$l_return_index .= '<a href="' . qi::url('settings') . '">Go to settings</a>';
-		$l_quickinstall = 'phpBB QuickInstall';
+		$l_return_index .= '<a href="' . qi::url('settings') . '">Go to settings</a> &bull; ';
 	}
+
+	$qi_version		= QI_VERSION;
 
 	phpbb_functions::send_status_line(503, 'Service Unavailable');
 
-	$error_out = file_get_contents($quickinstall_path . 'style/error.html');
-	$error_out = str_replace(
-		array('{L_QUICKINSTALL}', '{QI_PATH}', '{MSG_TITLE}', '{MSG_EXPLAIN}', '{MSG_TEXT}', '{SETTINGS_FORM}', '{RETURN_LINKS}', '{QI_VERSION}'),
-		array($l_quickinstall, $quickinstall_path, $msg_title, $msg_explain, $msg_text, $settings_form, $l_return_index, QI_VERSION),
-		$error_out
-	);
-	echo $error_out;
+echo<<<ERROR_PAGE
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>$msg_title</title>
+		<link href="{$quickinstall_path}style/style.css" rel="stylesheet" type="text/css" media="screen" />
+	</head>
+	<body id="errorpage">
+		<div id="wrap">
+			<div id="page-header">
+				$l_return_index
+			</div>
+
+			<div id="page-body">
+				<div id="acp">
+					<div class="panel">
+						<span class="corners-top"><span></span></span>
+						<div id="content">
+							<h1 style="margin-bottom: 10px; text-align: center;">$msg_title</h1>
+							<div style="font-weight: bold;">$msg_explain<br /><br /></div>
+							<div>$msg_text</div>
+						$settings_form
+						</div>
+						<div style="padding-left: 10px;">
+							$l_return_index
+						</div>
+						<span class="corners-bottom"><span></span></span>
+					</div>
+				</div>
+			</div>
+
+			<div id="page-footer">
+				<a href="https://www.phpbb.com/customise/db/official_tool/phpbb3_quickinstall/">phpBB QuickInstall</a> $qi_version for phpBB 3.0, 3.1 and 3.2 &copy; <a href="https://www.phpbb.com/">phpBB Limited</a><br />
+				Powered by phpBB&reg; Forum Software &copy; <a href="https://www.phpbb.com/">phpBB Limited</a>
+			</div>
+		</div>
+	</body>
+</html>
+ERROR_PAGE;
 
 	exit;
 }
@@ -282,10 +311,6 @@ function create_board_warning($msg_title, $msg_text, $page)
 	}
 
 	$url = "index.$phpEx?$args";
-	if (qi::is_ajax())
-	{
-		qi::ajax_response(array('redirect' => $url));
-	}
 	qi::redirect($url);
 }
 
@@ -436,7 +461,7 @@ function get_alternative_env($selected_option = '')
 	global $user, $quickinstall_path;
 
 	$none_selected	= (empty($selected_option)) ? ' selected="selected"' : '';
-	$alt_env		= "<option value=''$none_selected>{$user->lang['DEFAULT_ENV']}</option>";
+	$alt_env		= '';
 	$dh				= dir($quickinstall_path . 'sources/phpBB3_alt');
 
 	while (false !== ($file = $dh->read()))
@@ -453,6 +478,11 @@ function get_alternative_env($selected_option = '')
 		$alt_env .= "<option{$selected}>$file</option>";
 	}
 	$dh->close();
+
+	if (!empty($alt_env))
+	{
+		$alt_env = "<option value=''$none_selected>{$user->lang['DEFAULT_ENV']}</option>" . $alt_env;
+	}
 
 	return($alt_env);
 }

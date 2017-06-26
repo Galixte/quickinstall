@@ -30,11 +30,6 @@ class qi_create
 		// postgres uses remove_comments function which is defined in functions_admin
 		include($phpbb_root_path . 'includes/functions_admin.' . $phpEx);
 
-		if (!defined('PHPBB_32') && version_compare(PHP_VERSION, '7.0.0', '>='))
-		{
-			create_board_warning($user->lang['MINOR_MISHAP'], sprintf($user->lang['PHP7_INCOMPATIBLE'], PHP_VERSION), 'main');
-		}
-
 		if (defined('PHPBB_31'))
 		{
 			$config->set('rand_seed', md5(mt_rand()));
@@ -117,7 +112,7 @@ class qi_create
 		// check if we have a board db (and directory) name
 		if (!$dbname)
 		{
-			create_board_warning($user->lang['MINOR_MISHAP'], $user->lang['NO_DB'], 'main');
+			create_board_warning($user->lang['GENERAL_ERROR'], $user->lang['NO_DB'], 'main');
 		}
 
 		// Set the new board as root path.
@@ -159,9 +154,16 @@ class qi_create
 			}
 		}
 
-		if (in_array($dbms, array('sqlite', 'sqlite3')))
+		if ($dbms == 'sqlite')
 		{
 			$dbhost = $dbhost . $db_prefix . $dbname;
+		}
+		else if ($dbms == 'firebird')
+		{
+			$dbhost = $db_prefix . $dbname;
+
+			// temp remove some
+			list($db_prefix, $dbname, $temp1, $temp2) = array('', '', $db_prefix, $dbname);
 		}
 
 		// Set the new board as language path to get language files from outside phpBB
@@ -236,6 +238,12 @@ class qi_create
 		}
 		file_put_contents($board_dir . 'config.' . $phpEx, $config_data);
 
+		if ($dbms == 'firebird')
+		{
+			// and now restore
+			list($db_prefix, $dbname) = array($temp1, $temp2);
+		}
+
 		$db = db_connect();
 
 		if ($settings->get_config('drop_db', 0))
@@ -245,32 +253,35 @@ class qi_create
 		else
 		{
 			// Check if the database exists.
-			switch ($dbms)
+			if ($dbms == 'sqlite')
 			{
-				case 'sqlite':
-				case 'sqlite3':
-					$db_check = $db->sql_select_db($dbhost);
-				break;
-				case 'postgres':
-					global $sql_db;
+				$db_check = $db->sql_select_db($dbhost);
+			}
+			else if ($dbms == 'firebird')
+			{
+				$db_check = $db->sql_select_db($settings->get_cache_dir() . $db_prefix . $dbname);
+			}
+			else if ($dbms == 'postgres')
+			{
+				global $sql_db;
 
-					$error_collector_class = (defined('PHPBB_31')) ? '\phpbb\error_collector' : 'phpbb_error_collector';
+				$error_collector_class = (defined('PHPBB_31')) ? '\phpbb\error_collector' : 'phpbb_error_collector';
 
-					if (!class_exists($error_collector_class))
-					{
-						include $phpbb_root_path . 'includes/error_collector.' . $phpEx;
-					}
+				if (!class_exists($error_collector_class))
+				{
+					include $phpbb_root_path . 'includes/error_collector.' . $phpEx;
+				}
 
-					$error_collector = new $error_collector_class;
-					$error_collector->install();
-					$db_check_conn = new $sql_db();
-					$db_check_conn->sql_connect($dbhost, $dbuser, $dbpasswd, $db_prefix . $dbname, $dbport, false, false);
-					$error_collector->uninstall();
-					$db_check = count($error_collector->errors) == 0;
-				break;
-				default:
-					$db_check = $db->sql_select_db($db_prefix . $dbname);
-				break;
+				$error_collector = new $error_collector_class;
+				$error_collector->install();
+				$db_check_conn = new $sql_db();
+				$db_check_conn->sql_connect($dbhost, $dbuser, $dbpasswd, $db_prefix . $dbname, $dbport, false, false);
+				$error_collector->uninstall();
+				$db_check = count($error_collector->errors) == 0;
+			}
+			else
+			{
+				$db_check = $db->sql_select_db($db_prefix . $dbname);
 			}
 
 			if ($db_check)
@@ -279,24 +290,28 @@ class qi_create
 			}
 		}
 
-		switch ($dbms)
+		if ($dbms == 'sqlite')
 		{
-			case 'sqlite':
-			case 'sqlite3':
-				$db->sql_create_db($dbhost);
-				$db->sql_select_db($dbhost);
-			break;
-			case 'postgres':
-				global $sql_db;
-				$db->sql_query('CREATE DATABASE ' . $db_prefix . $dbname);
-				$db = new $sql_db();
-				$db->sql_connect($dbhost, $dbuser, $dbpasswd, $db_prefix . $dbname, $dbport, false, false);
-				$db->sql_return_on_error(true);
-			break;
-			default:
-				$db->sql_query('CREATE DATABASE ' . $db_prefix . $dbname);
-				$db->sql_select_db($db_prefix . $dbname);
-			break;
+			$db->sql_create_db($dbhost);
+			$db->sql_select_db($dbhost);
+		}
+		else if ($dbms == 'firebird')
+		{
+			$db->sql_query('CREATE DATABASE ' . $settings->get_cache_dir() . $db_prefix . $dbname);
+			$db->sql_select_db($settings->get_cache_dir() . $db_prefix . $dbname);
+		}
+		else if ($dbms == 'postgres')
+		{
+			global $sql_db;
+			$db->sql_query('CREATE DATABASE ' . $db_prefix . $dbname);
+			$db = new $sql_db();
+			$db->sql_connect($dbhost, $dbuser, $dbpasswd, $db_prefix . $dbname, $dbport, false, false);
+			$db->sql_return_on_error(true);
+		}
+		else
+		{
+			$db->sql_query('CREATE DATABASE ' . $db_prefix . $dbname);
+			$db->sql_select_db($db_prefix . $dbname);
 		}
 
 		// include install lang from phpbb. But only if it exists
@@ -655,9 +670,10 @@ class qi_create
 			// Update the lang array with keys loaded for the installer
 			$user->lang = array_merge($user->lang, $language->get_lang_array());
 
-			// Storing the user object temporarily because it is
-			// altered by the installer processes below...not sure why?
+			// Storing the db and user objects temporarily because they
+			// are altered by the installer processes below...not sure why?
 			$current_user = $user;
+			$current_db = $db;
 
 			// Suppress errors because constants.php is added again in these objects
 			// leading to debug notices about the constants already being defined.
@@ -683,9 +699,10 @@ class qi_create
 			$symfony_request = $phpbb_container->get('symfony_request');
 			$phpbb_filesystem = $phpbb_container->get('filesystem');
 
-			// Restore user object to original state
+			// Restore user and db objects to original state
 			$user = $current_user;
-			unset($current_user);
+			$db = $current_db;
+			unset($current_user, $current_db);
 		}
 		else if (defined('PHPBB_31'))
 		{
@@ -781,6 +798,13 @@ class qi_create
 			automod_installer::install_automod($board_dir, $settings->get_config('make_writable', false));
 		}
 
+		if ($dbms == 'firebird')
+		{
+			// copy the temp db over
+			file_functions::copy_file($settings->get_cache_dir() . $db_prefix . $dbname, $board_dir . $db_prefix . $dbname);
+			$db->sql_select_db($board_dir . $db_prefix . $dbname);
+		}
+
 		// clean up
 		file_functions::delete_files($board_dir, array('Thumbs.db', 'DS_Store', 'CVS', '.svn', '.git'));
 
@@ -856,18 +880,10 @@ class qi_create
 			// Log him/her in first.
 			$user->session_begin();
 			$auth->login($admin_name, $settings->get_config('admin_pass'), false, true, true);
-			if (qi::is_ajax())
-			{
-				qi::ajax_response(array('redirect' => $board_url));
-			}
 			qi::redirect($board_url);
 		}
 
 		// On succces just return to main page.
-		if (qi::is_ajax())
-		{
-			qi::ajax_response(array('redirect' => 'index.' . $phpEx));
-		}
 		qi::redirect('index.' . $phpEx);
 	}
 }

@@ -21,12 +21,10 @@ if (!defined('IN_QUICKINSTALL'))
 */
 class dbal_mysql_qi extends \phpbb\db\driver\mysql
 {
-	public $mysql_version;
-
 	/**
 	* Connect to server
 	*/
-	public function sql_connect($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false, $new_link = false)
+	function sql_connect($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false, $new_link = false)
 	{
 		$this->persistency = $persistency;
 		$this->user = $sqluser;
@@ -61,10 +59,17 @@ class dbal_mysql_qi extends \phpbb\db\driver\mysql
 	 * Select a database
 	 *
 	 * @param string $dbname
-	 * @return bool
 	 */
-	public function sql_select_db($dbname)
+	function sql_select_db($dbname)
 	{
 		return @mysql_select_db($dbname, $this->db_connect_id);
+	}
+
+	/**
+	 * Updates value of a sequence.
+	 * Does nothing in this dbal.
+	 */
+	public function update_sequence($sequence_name, $value)
+	{
 	}
 }
