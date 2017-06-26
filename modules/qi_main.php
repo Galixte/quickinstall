@@ -53,7 +53,7 @@ class qi_main
 			'DEFAULT_STYLE'		=> $settings->get_config('default_style', ''),
 
 			'S_ERROR'		=> $settings->get_config('error', 0),
-			'ERROR_TITLE'	=> $settings->get_config('error_title', ''),
+			'ERROR_TITLE'	=> $settings->get_config('error_title', '', true),
 
 			'S_AUTOMOD'		=> $settings->get_config('automod', 0),
 			'S_DELETE_FILES'=> $settings->get_config('delete_files', 0),
@@ -70,6 +70,8 @@ class qi_main
 			'S_MAIN'		=> true,
 
 			'ALT_ENV'		=> get_alternative_env($settings->get_config('alt_env')),
+
+			'PHPBB_VERSION'	=> defined('PHPBB_32') ? '3.2' : (defined('PHPBB_31') ? '3.1' : '3.0'),
 
 			// Chunk settings
 			'CHUNK_POST'	=> $settings->get_config('chunk_post', 0),
@@ -93,7 +95,7 @@ class qi_main
 		));
 
 		// Output page
-		qi::page_header($user->lang['QI_MANAGE'], $user->lang['QI_MANAGE_ABOUT']);
+		qi::page_header($user->lang['QI_MANAGE']);
 
 		$template->set_filenames(array(
 			'body' => 'main_body.html')

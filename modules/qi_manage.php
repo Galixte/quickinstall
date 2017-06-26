@@ -47,37 +47,7 @@ class qi_manage
 					// Need to get the dbname from the board.
 					@include($current_item . '/config.php');
 
-					if (!empty($dbname) && !empty($dbhost) && !empty($dbms))
-					{
-						$dbms = (strpos($dbms, '\\') !== false) ? substr(strrchr($dbms, '\\'), 1) : $dbms;
-
-						if ($dbms == 'sqlite')
-						{
-							$db_file = $dbhost . $dbname;
-
-							if (file_exists($db_file))
-							{
-								// Assuming the DB file is created by PHP, then PHP should also have permissions to delete it.
-								@unlink($db_file);
-							}
-						}
-						else if (!empty($dbuser) && !empty($dbpasswd))
-						{
-							// The order here is important, don't change it.
-							$db_vars = array(
-								$dbms,
-								$dbhost,
-								$dbuser,
-								$dbpasswd,
-								$dbport,
-							);
-
-							$db = db_connect($db_vars);
-							$db->sql_query('DROP DATABASE IF EXISTS ' . $dbname);
-							db_close($db); // Might give a error since the DB it deleted, needs to be more tested.
-						}
-					}
-
+					// Attempt to delete the board from filesystem
 					if (!file_exists($current_item) || !is_dir($current_item))
 					{
 						continue;
@@ -97,46 +67,64 @@ class qi_manage
 							$error = file_functions::$error;
 						}
 					}
+
+					// Attempt to delete the database
+					if (!empty($dbname) && !empty($dbhost) && !empty($dbms) && empty($error))
+					{
+						$dbms = (strpos($dbms, '\\') !== false) ? substr(strrchr($dbms, '\\'), 1) : $dbms;
+
+						if (in_array($dbms, array('sqlite', 'sqlite3')))
+						{
+							$db_file = $dbhost . $dbname;
+
+							if (file_exists($db_file))
+							{
+								// Assuming the DB file is created by PHP, then PHP should also have permissions to delete it.
+								@unlink($db_file);
+							}
+							else if (file_exists($dbhost))
+							{
+								// Assuming the DB file is created by PHP, then PHP should also have permissions to delete it.
+								@unlink($dbhost);
+							}
+						}
+						else if (!empty($dbuser) && !empty($dbpasswd))
+						{
+							// The order here is important, don't change it.
+							$db_vars = array(
+								$dbms,
+								$dbhost,
+								$dbuser,
+								$dbpasswd,
+								$dbport,
+							);
+
+							$db = db_connect($db_vars);
+							$db->sql_query('DROP DATABASE IF EXISTS ' . $dbname);
+							db_close($db); // Might give a error since the DB it deleted, needs to be more tested.
+						}
+					}
 				}
 
 				if (empty($error))
 				{
-					// Just return to main page after succesfull deletion.
+					// Just return to main page after successful deletion.
 					qi::redirect('index.' . $phpEx);
 				}
 				else
 				{
+					$msg_title = $user->lang['GENERAL_ERROR'];
+
+					$msg_explain = $boards > 1 ? $user->lang['ERROR_DEL_BOARDS'] : $user->lang['ERROR_DEL_FILES'];
+
+					$msg_text = '';
 					foreach ($error as $row)
 					{
-						$template->assign_block_vars('row', array(
-							'ERROR'	=> htmlspecialchars($row),
-						));
+						$msg_text = '<p>' . htmlspecialchars($row) . '</p>';
 					}
 
-					$template->assign_var('L_THE_ERROR', (($boards > 1) ? $user->lang['ERROR_DEL_BOARDS'] : $user->lang['ERROR_DEL_FILES']));
-
-					qi::page_header($user->lang['QI_MANAGE'], $user->lang['QI_MANAGE_ABOUT']);
-
-					$template->set_filenames(array(
-						'body' => 'errors_body.html'
-					));
-
-					qi::page_footer();
+					gen_error_msg($msg_text, $msg_title, $msg_explain);
 				}
-			break;
-
-			default:
-				// list of boards
-				get_installed_boards();
-
-				// Output page
-				qi::page_header($user->lang['QI_MANAGE'], $user->lang['QI_MANAGE_ABOUT']);
-
-				$template->set_filenames(array(
-					'body' => 'manage_body.html')
-				);
-
-				qi::page_footer();
 			break;
 		}
 	}

@@ -24,7 +24,7 @@ class dbal_mssql_qi extends \phpbb\db\driver\mssql
 	/**
 	* Connect to server
 	*/
-	function sql_connect($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false, $new_link = false)
+	public function sql_connect($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false, $new_link = false)
 	{
 		$this->persistency = $persistency;
 		$this->user = $sqluser;
@@ -45,16 +45,8 @@ class dbal_mssql_qi extends \phpbb\db\driver\mssql
 	 *
 	 * @param string $dbname
 	 */
-	function sql_select_db($dbname)
+	public function sql_select_db($dbname)
 	{
 		return @mssql_select_db($dbname, $this->db_connect_id);
-	}
-
-	/**
-	 * Updates value of a sequence.
-	 * Does nothing in this dbal.
-	 */
-	public function update_sequence($sequence_name, $value)
-	{
 	}
 }
