@@ -183,7 +183,7 @@ $lang = array_merge($lang, array(
 	'NO'					=> 'Non',
 	'NO_ALT_ENV'			=> 'Aucun environnement alternatif n’a été trouvé.',
 	'NO_ALT_ENV_FOUND'		=> 'L’environnement alternatif « <strong>%s</strong> » que vous avez spécifié n’existe pas.', // %s is the missing environment name
-	'NO_AUTOMOD'			=> '<strong>AutoMOD est introuvable dans le répertoire « sources ».</strong><br />Vous devez télécharger AutoMOD, copier tout le contenu du répertoire « root » dans le répertoire « sources/automod ». Si vous utilisez AutoMOD 1.0.0 c’est le contenu du répertoire « upload ».',
+	'NO_AUTOMOD'			=> '<strong>AutoMOD est introuvable dans le répertoire « sources ».</strong><br />Vous devez télécharger AutoMOD, copier tout le contenu du répertoire <code>root</code> dans le répertoire <code>sources/automod</code>. Si vous utilisez AutoMOD 1.0.0 c’est le contenu du répertoire <code>upload</code>.',
 	'NO_AUTOMOD_TITLE'		=> 'AutoMOD n’a pas été détecté',
 	'NO_BOARDS'				=> 'Vous n’avez aucun forum.',
 	'NO_DB'					=> 'Aucune base de données n’a été sélectionnée.',
@@ -296,6 +296,9 @@ $lang = array_merge($lang, array(
 	'TIME_SETTINGS'			=> 'Paramètres de temps',
 
 	'UNCHECK_ALL'		=> 'Tout déselectionner',
+	'UPDATE'			=> 'Mise à jour',
+
+	'VERSION_CHECK_TITLE'	=> 'La version %1$s de QuickInstall est disponible. Vous utilisez la version %2$s de QuickInstall. Cliquez ici pour télécharger la dernière version.',
 
 	'WORKING_ON_IT'		=> 'Exécution en cours…',
 
