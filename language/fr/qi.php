@@ -44,7 +44,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ABOUT_QUICKINSTALL'	=> 'À propos de QuickInstall',
+	'ABOUT_QUICKINSTALL'	=> 'À propos de phpBB QuickInstall',
 	'ABOUT_SECTIONS'		=> 'À propos de…',
 	'ADMIN_EMAIL'			=> 'Adresse e-mail de l’administrateur',
 	'ADMIN_EMAIL_EXPLAIN'	=> 'Adresse e-mail attribuée au compte administrateur créé sur vos forums.',
@@ -314,9 +314,9 @@ $lang = array_merge($lang, array(
 		'Merci à la communauté de phpBB, dont phpBB.com, startrekguide.com et phpBBModders.net !',
 	)) . '</li></ul>',
 	'WHO_WHEN'			=> 'Qui ? Quand ?',
-	'WHO_WHEN_EXPLAIN'	=> 'QuickInstall a été créé à l’origine par Igor Wiedler, également connu sous le nom de « igorw », durant l’été 2007. Il a été en partie réécrit par lui-même en mars 2008. De mars 2010 à mars 2015, ce projet était maintenu par Jari Kanerva, également connu sous le nom de « Tumba25 ». Le projet est actuellement maintenu par l’équipe des extensions de phpBB.',
+	'WHO_WHEN_EXPLAIN'	=> 'QuickInstall a été créé à l’origine par Igor Wiedler, également connu sous le nom de « igorw », durant l’été 2007. Il a été en partie réécrit par lui-même en mars 2008. De mars 2010 à mars 2015, ce projet était maintenu par Jari Kanerva, également connu sous le nom de « tumba25 ». Le projet est actuellement maintenu par l’équipe des extensions de phpBB.',
 	'WHY'				=> 'Pourquoi ?',
-	'WHY_EXPLAIN'		=> 'L’ère phpBB 2.x & phpBB 3.0, étaient basées sur le modding (installation de modifications). Les auteurs ne pouvez pas développer et tester tous leurs MODs dans une seule installation de phpBB. QuickInstall a été conçu pour accélérer et simplifier la creation de forums séparés pour chacun de leurs MODs. Maintenant, qu’il s’agit de l’ère des extensions, QuickInstall demeure un outil rapide pour générer des nouvelles installations, développer et tester des extensions.',
+	'WHY_EXPLAIN'		=> 'L’ère phpBB 2.x & phpBB 3.0, étaient basées sur le modding (installation de modifications). Les auteurs ne pouvaient pas développer et tester tous leurs MODs dans une seule installation de phpBB. QuickInstall a été conçu pour accélérer et simplifier la creation de forums séparés pour chacun de leurs MODs. Maintenant, qu’il s’agit de l’ère des extensions, QuickInstall demeure un outil rapide pour générer des nouvelles installations, développer et tester des extensions.',
 
 	// Config updated strings.
 	'UPDATED_EXPLAIN'	=> 'Votre profil a été mis à jour vers la version %s de QuickInstall. Ci-dessous vous trouverez la liste des modifications. Ces nouveaux paramètres ont été définis avec leur valeur par défaut, également indiquées ci-dessous.<br />Si vous souhaitez modifier ces nouveaux paramètres, accédez à la page de configuration en cliquant sur les liens présents en haut et bas de page. Si vous avez plus d’un profil, cliquez sur le bouton ci-dessous pour mettre à jour tous vos profils.', // %s will be replaced with QI version.
