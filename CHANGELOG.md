@@ -1,5 +1,15 @@
 # QuickInstall Changelog
 
+## Changes in 1.3.5
+- [Fix] Fixed an issue where search results of pre-populated posts showed unparsed BBCode XML tags.
+- [Fix] Fixed a PHP notice that popped up in QI's templating system with PHP 7.2.
+
+## Changes in 1.3.4
+- [Fix] Fixed an issue introduced in 1.3.3 that caused a fatal error while installing 3.0 boards.
+
+## Changes in 1.3.3
+- [Fix] phpBB 3.2.3 can now be installed with QI without failing and getting hung up.
+
 ## Changes in 1.3.2
 - [Change] Sort profiles naturally in drop down lists.
 - [Fix] Corrected potential problems with how URLs are generated internally.
