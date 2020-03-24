@@ -25,5 +25,5 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'LOG_INSTALL_INSTALLED_QI'	=> '<strong>Forum installé par QuickInstall version %s</strong>',
+	'LOG_INSTALL_INSTALLED_QI'	=> '<strong>Forum installé par phpBB QuickInstall version %s</strong>',
 ));

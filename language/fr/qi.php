@@ -44,10 +44,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ABOUT_QUICKINSTALL'	=> 'À propos de phpBB QuickInstall',
-	'ABOUT_SECTIONS'		=> 'À propos de…',
-	'ADMIN_EMAIL'			=> 'Adresse e-mail de l’administrateur',
-	'ADMIN_EMAIL_EXPLAIN'	=> 'L’adresse e-mail à assigner au compte administrateur créé sur vos forums.',
+	'ABOUT_QUICKINSTALL'	=> 'À propos de phpBB<small><sup><i class="glyphicon glyphicon-registration-mark" aria-hidden="true"></i></sup></small> QuickInstall',
+	'ADMIN_EMAIL'			=> 'Adresse courriel de l’administrateur',
+	'ADMIN_EMAIL_EXPLAIN'	=> 'L’adresse courriel à assigner au compte administrateur créé sur vos forums.',
 	'ADMIN_NAME'			=> 'Nom d’utilisateur de l’administrateur',
 	'ADMIN_NAME_EXPLAIN'	=> 'Le nom d’utilisateur à assigner au compte administrateur créé sur vos forums.',
 	'ADMIN_PASS'			=> 'Mot de passe de l’administrateur',
@@ -64,8 +63,8 @@ $lang = array_merge($lang, array(
 	'BOARD_CONFIG_SETTINGS_EXPLAIN'	=> 'Il s’agit des paramètres généraux pour vos forums phpBB.',
 	'BOARD_DBNAME'			=> 'Nom du répertoire et de la base de données du forum',
 	'BOARD_DESC'			=> 'Description du forum',
-	'BOARD_EMAIL'			=> 'Adresse e-mail du forum',
-	'BOARD_EMAIL_EXPLAIN'	=> 'L’adresse e-mail de contact utilisée par vos forums.',
+	'BOARD_EMAIL'			=> 'Adresse courriel du forum',
+	'BOARD_EMAIL_EXPLAIN'	=> 'L’adresse courriel de contact utilisée par vos forums.',
 	'BOARD_NAME'			=> 'Nom du forum',
 	'BOARDS'				=> 'Forums',
 	'BOARDS_DIR'			=> 'Répertoire des forums',
@@ -135,17 +134,20 @@ $lang = array_merge($lang, array(
 	'DROP_DB_IF_EXISTS'				=> 'Supprimer la base de données si elle existe',
 	'DROP_DB_IF_EXISTS_EXPLAIN'		=> 'Activer par défaut « Supprimer la base de données si elle existe » lors de la création des forums.',
 
-	'EMAIL_DOMAIN'			=> 'Domaine de l’adresse e-mail',
-	'EMAIL_DOMAIN_EXPLAIN'	=> 'Domaine de l’adresse e-mail à utiliser pour les comptes de membres créés lors de la création du forum.<br />Les adresses e-mail seront sous la forme : <code>tester_x@&lt;domain.tld&gt;</code>.',
-	'EMAIL_ENABLE'			=> 'Activer les e-mails',
-	'EMAIL_ENABLE_EXPLAIN'	=> 'Activer l’envoi et la réception d’e-mails sur le forum. S’il s’agit d’un test en local, il n’est pas nécessaire de les activer, à moins que vous ne souhaitiez tester les e-mails.',
-	'EMAIL_SETTINGS'		=> 'Paramètres e-mail',
+	'EMAIL_DOMAIN'			=> 'Domaine de l’adresse courriel',
+	'EMAIL_DOMAIN_EXPLAIN'	=> 'Domaine de l’adresse courriel à utiliser pour les comptes de membres créés lors de la création du forum.<br />Les adresses courriels seront sous la forme : <code>tester_x@&lt;domain.tld&gt;</code>.',
+	'EMAIL_ENABLE'			=> 'Activer les courriels',
+	'EMAIL_ENABLE_EXPLAIN'	=> 'Activer l’envoi et la réception de courriels sur le forum. S’il s’agit d’un test en local, il n’est pas nécessaire de les activer, à moins que vous ne souhaitiez tester les courriels.',
+	'EMAIL_SETTINGS'		=> 'Paramètres de courriel',
+	'ENABLE_DEBUG'			=> 'Activer le débugueur',
+	'ENABLE_DEBUG_EXPLAIN'	=> 'Affiche le temps de chargement, l’utilisation de la mémoire, les statistiques des requêtes et un rapport d’erreurs amélioré.',
 	'ERRORS'				=> 'Des erreurs sont présentes',
 	'ERROR_DEL_BOARDS'		=> 'Les forums suivants ne peuvent pas être supprimés',
 	'ERROR_DEL_FILES'		=> 'Les fichiers suivants ne peuvent pas être supprimés',
 
 	'FUNCTIONS_MODS_MISSING'	=> '« includes/automod/functions_mods.php » non trouvé.',
 	'FORGOT_THIS'				=> 'VOUS AVEZ OUBLIÉ CECI !', // Should be upper case.
+	'FOR_PHPBB_VERSIONS'		=> 'pour phpBB 3.0 - 4.0',
 
 	'GENERAL_ERROR'				=> 'Erreur générale',
 	'GO'						=> 'Aller',
@@ -178,7 +180,7 @@ $lang = array_merge($lang, array(
 	'MISC_SETTINGS'			=> 'Paramètres divers',
 
 	'NEED_CONVERT'			=> 'Votre fichier de configuration doit être converti au nouveau format de gestion de profils. Assurez-vous que le dossier « settings » est présent et qu’il est accessible en écriture par PHP. Puis cliquez sur « Envoyer ».',
-	'NEED_EMAIL_DOMAIN'		=> 'Un domaine de l’adresse e-mail est nécessaire pour créer des utilisateurs de test',
+	'NEED_EMAIL_DOMAIN'		=> 'Un domaine de l’adresse courriel est nécessaire pour créer des utilisateurs de test',
 	'NEED_WRITABLE'			=> 'QuickInstall nécessite que les répertoires « cache » et « boards » soient accessibles en écriture de manière permanente.<br />le répertoire « settings » doit se trouver à la racine de QuickInstall et doit également être accessible en écriture.',
 	'NO'					=> 'Non',
 	'NO_ALT_ENV'			=> 'Aucun environnement alternatif n’a été trouvé.',
@@ -217,6 +219,9 @@ $lang = array_merge($lang, array(
 	'OTHER_CONFIG'			=> 'Paramètres additionnels de configuration du forum',
 	'OTHER_CONFIG_EXPLAIN'	=> 'Ceux-ci seront mis à jour dans la table « config » ou ajoutés à la table « config » s’ils n’existent pas encore. <u>Assurez-vous de les orthographier correctement.</u> Ils peuvent également être modifiés lors de la création du forum.<br />Saisissez un paramètre de configuration par ligne et utilisez un point-virgule <kbd>;</kbd> comme séparateur de liste : <kbd>config-name;config-setting;dynamic</kbd>.<br />Si le paramètre n’est pas dynamique alors « dynamic » n’est pas nécessaire. Les lignes commençant par <kbd>#</kbd> sont considérées comme des commentaires et ne sont pas ajoutées à la base de données.<br /><br />Exemple :<br /><kbd>session_length;999999</kbd><br /><kbd>load_tplcompile;1;1</kbd><br /><kbd># ceci est un commentaire</kbd>',
 
+	'PHPBB_QI_TEXT'		=> 'phpBB<small><sup><i class="glyphicon glyphicon-registration-mark" aria-hidden="true"></i></sup></small> QuickInstall',
+	'PHPBB_QI_TITLE'	=> 'phpBB&reg; QuickInstall',
+
 	'PHP7_INCOMPATIBLE'	=> 'Le forum que vous essayez d’installer n’est pas compatible avec PHP 7. Vous utilisez PHP %s.',
 	'PHPINFO'			=> 'Informations PHP',
 	'PHPINFO_TITLE'		=> 'Informations PHP',
@@ -226,9 +231,9 @@ $lang = array_merge($lang, array(
 	'POPULATE_EXPLAIN'	=> 'Permet de créer automatiquement des membres, des catégories, des forums, des sujets et des messages selon les paramètres spécifiés ci-dessous. Plus ces valeurs sont élevées, plus le temps de création du forum sera important.',
 	'POPULATE_OPTIONS'	=> 'Options de remplissage',
 	'POPULATE_SETTINGS'	=> 'Paramètres de remplissage',
+	'POWERED_BY_PHPBB'	=> 'Propulsé par phpBB<sup>&reg;</sup> Forum Software &copy; <a href="https://www.phpbb.com/">phpBB Limited</a>',
 	'PROFILES'			=> 'Profils',
 
-	'QI_ABOUT'			=> 'À propos de QuickInstall',
 	'QI_LANG'			=> 'Langue de QuickInstall',
 	'QI_LANG_EXPLAIN'	=> 'Sélectionnez la langue à utiliser pour QuickInstall. Les langues disponibles sont stockées dans le répertoire <code>language/</code>.',
 	'QI_MANAGE'			=> 'Gérer les forums',
@@ -238,7 +243,7 @@ $lang = array_merge($lang, array(
 	'QI_SETTINGS'		=> 'Paramètres de QuickInstall',
 	'QI_TZ'				=> 'Fuseau horaire',
 	'QI_TZ_EXPLAIN'		=> 'Définit le fuseau horaire par défaut pour les forums créés.<br />Pour la branche 3.0.x ce paramètre sera automatiquement converti en valeur numérique et DST (heure d’été).',
-	'QUICKINSTALL'		=> 'phpBB QuickInstall',
+	'QUICKINSTALL'		=> 'QuickInstall',
 
 	'REDIRECT'			=> 'Rediriger',
 	'REDIRECT_EXPLAIN'	=> 'Redirige vers le nouveau forum après sa création.',
@@ -269,8 +274,8 @@ $lang = array_merge($lang, array(
 	'SITE_NAME_EXPLAIN'			=> 'Le nom du site par défaut qui sera utilisé pour vos forums.',
 	'SMTP_AUTH'					=> 'Méthode d’authentification pour SMTP',
 	'SMTP_AUTH_EXPLAIN'			=> 'Cette option n’est utilisée que si un nom d’utilisateur SMTP et un mot de passe SMTP ont été renseignés.',
-	'SMTP_DELIVERY'				=> 'Utiliser le serveur SMTP pour l’envoi d’e-mails',
-	'SMTP_DELIVERY_EXPLAIN'		=> 'Activez cette option si vous souhaitez ou devez envoyer un e-mail par l’intermédiaire d’un serveur nommé au lieu de la fonction de messagerie interne.',
+	'SMTP_DELIVERY'				=> 'Utiliser le serveur SMTP pour l’envoi de courriels',
+	'SMTP_DELIVERY_EXPLAIN'		=> 'Activez cette option si vous souhaitez ou devez envoyer un courriel par l’intermédiaire d’un serveur nommé au lieu de la fonction de messagerie interne.',
 	'SMTP_HOST'					=> 'Adresse du serveur SMTP',
 	'SMTP_HOST_EXPLAIN'			=> 'L’adresse du serveur SMTP que vous souhaitez utiliser.',
 	'SMTP_PASS'					=> 'Mot de passe SMTP',
@@ -303,20 +308,6 @@ $lang = array_merge($lang, array(
 	'WORKING_ON_IT'			=> 'En cours de traitement…',
 
 	'YES'					=> 'Oui',
-
-	'WHAT'					=> 'Qu’est-ce ?',
-	'WHAT_EXPLAIN'			=> 'phpBB QuickInstall est un outil permettant d’installer rapidement un forum phpBB. C’est assez évident… 😉',
-	'WHO_ELSE'				=> 'Qui d’autre ?',
-	'WHO_ELSE_EXPLAIN'		=> '<ul><li>' . implode('</li><li>', array(
-		'Les crédits reviennent à l’équipe de phpBB, plus particulièrement à l’équipe de développement qui a réussi à créer ce logiciel d’excellente qualité.',
-		'Merci à l’équipe des MODs de phpBB.com (plus spécialement à Josh, également connu sous le nom de « A_Jelly_Doughnut ») pour AutoMOD, qui est intégré à cette archive.',
-		'Merci aux bêta testeurs !',
-		'Merci à la communauté de phpBB, dont phpBB.com, startrekguide.com et phpBBModders.net !',
-	)) . '</li></ul>',
-	'WHO_WHEN'				=> 'Qui ? Quand ?',
-	'WHO_WHEN_EXPLAIN'		=> 'phpBB QuickInstall a été créé à l’origine par Igor Wiedler, également connu sous le nom de « igorw », durant l’été 2007. Il a été en partie réécrit par lui-même en mars 2008. De mars 2010 à mars 2015 le projet a été maintenu par Jari Kanerva, également connu sous le nom de « tumba25 ». Le projet est désormais maintenu par l’équipe « phpBB Extensions ».',
-	'WHY'					=> 'Pourquoi ?',
-	'WHY_EXPLAIN'			=> 'Du temps de phpBB 2.x et 3.0 les modifications s’effectuaient sont la forme de MOD. Les auteurs de MOD ne pouvaient pas développer et tester leurs MOD avec une installation unique de phpBB. QuickInstall est né pour accélérer et simplifier le processus de création de nouvelles installations distinctes pour chacun de leurs MOD. Maintenant, avec l’arrivée des extensions, QuickInstall est tout aussi utile pour générer rapidement de nouvelles installation de phpBB dans le but de développer, installer ou tester des extensions en toute sécurité.',
 
 	// Config updated strings.
 	'UPDATED_EXPLAIN'	=> 'Votre profil a été mis à jour vers la version %s de QuickInstall. Ci-dessous vous trouverez la liste des modifications. Ces nouveaux paramètres ont été définis avec leur valeur par défaut, également indiquées ci-dessous.<br />Si vous souhaitez modifier ces nouveaux paramètres, accédez à la page de configuration en cliquant sur les liens présents en haut et bas de page. Si vous avez plus d’un profil, cliquez sur le bouton ci-dessous pour mettre à jour tous vos profils.', // %s will be replaced with QI version.
