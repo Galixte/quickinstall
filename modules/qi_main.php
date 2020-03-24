@@ -57,6 +57,7 @@ class qi_main
 
 			'S_AUTOMOD'		=> $settings->get_config('automod', 0),
 			'S_DELETE_FILES'=> $settings->get_config('delete_files', 0),
+			'S_DEBUG'		=> $settings->get_config('debug', 0),
 			'S_DROP_DB'		=> $settings->get_config('drop_db', 0),
 			'S_MAKE_WRITABLE'	=> $settings->get_config('make_writable', 0),
 			'S_POPULATE'	=> $settings->get_config('populate', 0),
@@ -71,7 +72,7 @@ class qi_main
 
 			'ALT_ENV'		=> get_alternative_env($settings->get_config('alt_env')),
 
-			'PHPBB_VERSION'	=> defined('PHPBB_32') ? '3.2' : (defined('PHPBB_31') ? '3.1' : '3.0'),
+			'PHPBB_VERSION'	=> qi_get_phpbb_version(),
 
 			// Chunk settings
 			'CHUNK_POST'	=> $settings->get_config('chunk_post', 0),

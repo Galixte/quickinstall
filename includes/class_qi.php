@@ -39,7 +39,6 @@ class qi
 			'PAGE_TITLE'	=> $page_title,
 			'T_THEME_PATH'	=> 'style',
 
-			'U_ABOUT'		=> self::url('about'),
 			'U_DOCS'		=> self::url('docs'),
 			'U_MANAGE'		=> self::url('manage'),
 			'U_MAIN'		=> self::url('main'),
@@ -335,8 +334,8 @@ class qi
 
 				$error_out = file_get_contents($quickinstall_path . 'style/error.html');
 				$error_out = str_replace(
-					array('{L_QUICKINSTALL}', '{QI_PATH}', '{MSG_TITLE}', '{MSG_EXPLAIN}', '{MSG_TEXT}', '{SETTINGS_FORM}', '{RETURN_LINKS}', '{QI_VERSION}'),
-					array($user->lang['QUICKINSTALL'], $quickinstall_path, $msg_title, '', $msg_text, '', $l_return_index, QI_VERSION),
+					array('{L_QUICKINSTALL}', '{L_PHPBB_QI_TEXT}', '{QI_PATH}', '{MSG_TITLE}', '{MSG_EXPLAIN}', '{MSG_TEXT}', '{SETTINGS_FORM}', '{RETURN_LINKS}', '{QI_VERSION}', '{L_FOR_PHPBB_VERSIONS}', '{L_POWERED_BY_PHPBB}'),
+					array($user->lang['QUICKINSTALL'], $user->lang['PHPBB_QI_TEXT'], $quickinstall_path, $msg_title, '', $msg_text, '', $l_return_index, QI_VERSION, $user->lang['FOR_PHPBB_VERSIONS'], $user->lang['POWERED_BY_PHPBB']),
 					$error_out
 				);
 				if (self::is_ajax())

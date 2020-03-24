@@ -42,8 +42,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ABOUT_QUICKINSTALL'	=> 'About phpBB QuickInstall',
-	'ABOUT_SECTIONS'		=> 'About sections',
+	'ABOUT_QUICKINSTALL'	=> 'About phpBB<small><sup><i class="glyphicon glyphicon-registration-mark" aria-hidden="true"></i></sup></small> QuickInstall',
 	'ADMIN_EMAIL'			=> 'Admin email',
 	'ADMIN_EMAIL_EXPLAIN'	=> 'The email to assign to the admin account created for your boards.',
 	'ADMIN_NAME'			=> 'Administrator username',
@@ -138,12 +137,15 @@ $lang = array_merge($lang, array(
 	'EMAIL_ENABLE'			=> 'Enable email',
 	'EMAIL_ENABLE_EXPLAIN'	=> 'Enable board wide emails. For a local test board this would typically be off, unless you test the emails.',
 	'EMAIL_SETTINGS'		=> 'E-mail settings',
+	'ENABLE_DEBUG'			=> 'Enable Debug',
+	'ENABLE_DEBUG_EXPLAIN'	=> 'Display load time, memory usage, query stats and enhanced error reporting.',
 	'ERRORS'				=> 'There were errors',
 	'ERROR_DEL_BOARDS'		=> 'The following boards could not be deleted',
 	'ERROR_DEL_FILES'		=> 'The following files could not be deleted',
 
 	'FUNCTIONS_MODS_MISSING'	=> '&quot;includes/functions_mods.php&quot; not found.',
 	'FORGOT_THIS'				=> 'You forgot this!',
+	'FOR_PHPBB_VERSIONS'		=> 'for phpBB 3.0 - 4.0',
 
 	'GENERAL_ERROR'		=> 'General Error',
 	'GO'				=> 'Go',
@@ -215,7 +217,10 @@ $lang = array_merge($lang, array(
 	'OTHER_CONFIG'			=> 'Additional board config settings',
 	'OTHER_CONFIG_EXPLAIN'	=> 'Config settings entered here will be updated in the config table or added to the config table if they don’t exist yet. <u>Make sure to spell correctly.</u> This can also be edited when creating the boards.<br /><br />Type one config setting per line in a semicolon <kbd>;</kbd> separated list e.g., <kbd>config-name;config-setting;dynamic</kbd>. If the setting is not dynamic then the dynamic part is not needed. Lines starting with a <kbd>#</kbd> are considered comments and not added to the DB.<br /><br />Example:<br /><kbd>session_length;999999</kbd><br /><kbd>load_tplcompile;1;1</kbd><br /><kbd># A comment</kbd>',
 
-	'PHP7_INCOMPATIBLE'	=> 'The board you are trying to install is not compatible with PHP 7. You are using PHP %s.',
+	'PHPBB_QI_TEXT'		=> 'phpBB<small><sup><i class="glyphicon glyphicon-registration-mark" aria-hidden="true"></i></sup></small> QuickInstall',
+	'PHPBB_QI_TITLE'	=> 'phpBB&reg; QuickInstall',
+
+	'PHP7_INCOMPATIBLE'	=> 'The board you are trying to install, phpBB %1$s, is not compatible with PHP %2$s.',
 	'PHPINFO'			=> 'PHP info',
 	'PHPINFO_TITLE'		=> 'PHP information',
 	'PHPINFO_EXPLAIN'	=> 'This page lists information on the version of PHP installed on this server. It includes details of loaded modules, available variables and default settings. This information may be useful when diagnosing problems.<br /><br />Please be aware that some hosting companies will limit what information is displayed here for security reasons.<br /><br />You are advised to only give out details on this page on a need to know basis.',
@@ -224,9 +229,9 @@ $lang = array_merge($lang, array(
 	'POPULATE_EXPLAIN'	=> 'Populates the board with the number of users, forums, posts and topics you specify below. Note that the more users, forums, posts and topics you specify, the longer it will take to process.',
 	'POPULATE_OPTIONS'	=> 'Populate options',
 	'POPULATE_SETTINGS'	=> 'Populate settings',
+	'POWERED_BY_PHPBB'	=> 'Powered by phpBB<sup>&reg;</sup> Forum Software &copy; <a href="https://www.phpbb.com/">phpBB Limited</a>',
 	'PROFILES'			=> 'Profiles',
 
-	'QI_ABOUT'			=> 'About',
 	'QI_LANG'			=> 'Select QuickInstall language',
 	'QI_LANG_EXPLAIN'	=> 'Select a language for QuickInstall. The available languages are stored in the directory <code>language/</code>',
 	'QI_MANAGE'			=> 'Manage boards',
@@ -236,7 +241,7 @@ $lang = array_merge($lang, array(
 	'QI_SETTINGS'		=> 'QuickInstall settings',
 	'QI_TZ'				=> 'Time zone',
 	'QI_TZ_EXPLAIN'		=> 'Set the default time zone for created boards. (For the 3.0.x branch it will be converted to numerical timezone and DST.)',
-	'QUICKINSTALL'		=> 'phpBB QuickInstall',
+	'QUICKINSTALL'		=> 'QuickInstall',
 
 	'REDIRECT'			=> 'Redirect',
 	'REDIRECT_EXPLAIN'	=> 'Redirect to new board after it is created.',
@@ -301,20 +306,6 @@ $lang = array_merge($lang, array(
 	'WORKING_ON_IT'		=> 'We’re working on it...',
 
 	'YES'	=> 'Yes',
-
-	'WHAT'				=> 'What?',
-	'WHAT_EXPLAIN'		=> 'phpBB QuickInstall is a tool to quickly setup phpBB boards. Pretty obvious... 😉',
-	'WHO_ELSE'			=> 'Who else?',
-	'WHO_ELSE_EXPLAIN'	=> '<ul><li>' . implode('</li><li>', array(
-		'Credits go to the phpBB team, especially the development team which created such a wonderful piece of software.',
-		'Thanks to the phpBB.com MOD team (especially Josh, aka “A_Jelly_Doughnut”) for AutoMOD.',
-		'Thanks to the beta testers!',
-		'Thanks to the phpBB community including phpBB.com, startrekguide.com and phpBBModders.net!',
-	)) . '</li></ul>',
-	'WHO_WHEN'			=> 'Who? When?',
-	'WHO_WHEN_EXPLAIN'	=> 'phpBB QuickInstall was originally created by Igor “igorw” Wiedler in the summer of 2007. It was partially rewritten by him in March 2008. From March 2010 to March 2015 the project was mantained by Jari “tumba25” Kanerva. The project is now maintained by the phpBB Extensions Team.',
-	'WHY'				=> 'Why?',
-	'WHY_EXPLAIN'		=> 'The days of phpBB 2.x and 3.0 were all about modding (creating modifications). Authors could not effectively develop and test all their MODs in a single phpBB installation. QuickInstall was born to speed up and simplify the process of creating separate fresh installations for each of their MODs. Now, in the era of extensions, QuickInstall is still just as useful for rapidly generating fresh installations to safely install, develop and test extensions in.',
 
 	// Config updated strings.
 	'UPDATED_EXPLAIN'	=> 'Your profile has been updated to this version of QuickInstall (%s). The changes made are defined below. They have been set to default values. also defined below.<br />You might want to look into the Settings page (link at the bottom) and set them to your desired values. If you have more than one profile, just press the button below to get all profiles updated.', // %s will be replaced with QI version.
